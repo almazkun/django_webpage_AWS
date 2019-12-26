@@ -86,5 +86,65 @@ pipenv install django==3.0.*
 pipenv shell
 django-admin startproject akundev_project .
 python manage.py migrate
+python manage.py startapp portfolio
+```
+3. Add new app to `settings.py`:
+```python
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "portfolio.apps.PortfolioConfig" # add this line
+]
+
+TEMPLATES = [
+        ...
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # add this line
+        ...
+]
+```
+4. Now open `/portfolio/views.py` and add following code:
+```python
+from django.views.generic import TemplateView
 
 
+class HomePageView(TemplateView):
+    template_name = "home.html"
+```
+5. Create `/portfolio/urls.py`:
+```powershell
+New-Item -Path . -Name "urls.py" -ItemType "file"
+```
+6. Add following code to `/portfolio/urls.py`:
+```python
+from django.urls import path
+
+from .views import HomePageView
+
+
+urlpatterns = [
+    path("", HomePageView.as_view(), name="home")
+]
+```
+7. Update `/akundev_project/urls.py`:
+```python
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("portfolio.urls")) # add this line
+]
+```
+8. Templates. Create following folders and files:
+```powershell
+New-Item -Path . -Name "templates" -ItemType "directory"
+New-Item -Path ./templates/ -Name "layout" -ItemType "directory"
+New-Item -Path ./templates/ -Name "base.html" -ItemType "file"
+New-Item -Path ./templates/ -Name "home.html" -ItemType "file"
+New-Item -Path ./templates/layout/ -Name "nav.html" -ItemType "file"
+New-Item -Path ./templates/layout/ -Name "footer.html" -ItemType "file"
+```
