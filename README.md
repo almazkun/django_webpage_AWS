@@ -142,9 +142,62 @@ urlpatterns = [
 8. Templates. Create following folders and files:
 ```powershell
 New-Item -Path . -Name "templates" -ItemType "directory"
-New-Item -Path ./templates/ -Name "layout" -ItemType "directory"
-New-Item -Path ./templates/ -Name "base.html" -ItemType "file"
+New-Item -Path ./templates/ -Name "layouts" -ItemType "directory"
+New-Item -Path ./templates/ -Name "includes" -ItemType "directory"
 New-Item -Path ./templates/ -Name "home.html" -ItemType "file"
-New-Item -Path ./templates/layout/ -Name "nav.html" -ItemType "file"
-New-Item -Path ./templates/layout/ -Name "footer.html" -ItemType "file"
+New-Item -Path ./templates/layouts/ -Name "base.html" -ItemType "file"
+New-Item -Path ./templates/includes/ -Name "footer.html" -ItemType "file"
+New-Item -Path ./templates/includes/ -Name "nav.html" -ItemType "file"
+New-Item -Path ./templates/includes/ -Name "javascripts.html" -ItemType "file"
+New-Item -Path ./templates/includes/ -Name "headscripts.html" -ItemType "file"
+New-Item -Path ./templates/includes/ -Name "stylesheets.html" -ItemType "file"
+```
+9. Open `templates/layout/nav.html` and add following code:
+```django
+{% load static %}
+    <!-- Navigation For Desktop -->
+    <div class="container d-none d-lg-flex">
+        <nav class="navbar navbar-light">
+            <div class="navbar-brand">
+                <a class="nav-link" href="{% url "home" %}" title="Software Engineer, Python, portfolio">Home</a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" href="#about" title="About">About</a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" href="#portfolio" title="Portfolio">Portfolio</a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" href="#cv" title="Resume (CV)">Resume (CV)</a>
+            </div>
+            <div class="nav-item">
+                <a class="nav-link" href="#contacts" title="Contacts">Contacts</a>
+            </div>
+        </nav>
+    </div>
+
+    <!-- For Mobile -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light py-1 px-3 d-lg-none">
+        <a class="nav-link" href="{% url 'home' %}" title="Software Engineer, Python, portfolio">Home</a>
+        
+        <button class="navbar-toggler p-0" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#about" title="About">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#portfolio" title="Portfolio">Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#cv" title="Resume (CV)">Resume (CV)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contacts" title="Contacts">Contacts</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 ```
