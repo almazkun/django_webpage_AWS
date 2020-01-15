@@ -142,8 +142,7 @@ urlpatterns = [
 ```
 8. In this section we will create our webpage front-end. We will use [Bootstrap 4](https://getbootstrap.com/) framework to help us make our webpage beautiful. 
 
-    1. **Includes**. `includes` are code snippet regulary reused throughout the webpage. It is sections like `navigation`, `footer` and `head`. Create following folders and files:
-
+    1. Create following folders and files:
     ```powershell
     New-Item -Path . -Name "templates" -ItemType "directory"
     New-Item -Path ./templates/ -Name "layouts" -ItemType "directory"
@@ -153,11 +152,11 @@ urlpatterns = [
     New-Item -Path ./templates/includes/ -Name "footer.html" -ItemType "file"
     New-Item -Path ./templates/includes/ -Name "nav.html" -ItemType "file"
     New-Item -Path ./templates/includes/ -Name "javascripts.html" -ItemType "file"
-    New-Item -Path ./templates/includes/ -Name "headscripts.html" -ItemType "file"
-    New-Item -Path ./templates/includes/ -Name "stylesheets.html" -ItemType "file"
     ```
-    
-    2. Open `templates/includes/nav.html` and add following code:
+
+    2. **Includes**. `includes` are code snippet regularly reused throughout the webpage. They are sections like `navigation` and `footer`. 
+    Open `templates/includes/nav.html` and add following code:
+
     ```django
     {% load static %}
         <!-- Navigation For Desktop -->
@@ -208,4 +207,4 @@ urlpatterns = [
     ```
     3. Open `templates/includes/headscripts.html` and add following code:
     ```django
-    
+
