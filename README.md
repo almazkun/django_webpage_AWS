@@ -219,3 +219,46 @@ urlpatterns = [
     127.0.0.1:8000
     ```
     You should be able to see your website.
+
+## 4. Deployment of the website. 
+In this section will Dockerize our Django wep page and deploy it to the AWS instance. 
+1. We will start by installing a [Docker client](https://docs.docker.com/docker-for-windows/install/). 
+2. After installing Docker Desktop client, navigate to the root project directory (in my case it is `akundotdev`) and  create `Dockerfile` and add the following
+```powershell
+New-Item -Path . -Name "Dockerfile" -ItemType "file"
+```
+```
+FROM python:3.8
+
+ENV PYTHONUNBUFFERED 1
+
+RUN mkdir /<dir-in-container>
+
+WORKDIR /<dir-in-container>
+
+ADD . /<dir-in-container>/
+
+RUN pip install -r requirements.txt
+
+EXPOSE 8000
+
+CMD exec gunicorn <Django-project_name>.wsgi:application — bind 0.0.0.0:8000 — workers 3
+```
+12. Create `Docker-compose.yml` file and write following instructions:
+```powershell
+New-Item -Path . -Name "Dockerfile" -ItemType "file"
+```
+```yml
+restart: always
+build:
+expose:
+    - "8000"
+volumes:
+    - web-django:/usr/src/app
+    - web-static:/usr/src/app/static
+env_file: .env
+environment:
+    DEBUG: 'true'
+command: /usr/local/bin/gunicorn docker_django.wsgi:application -w 2 -b :8000
+```
+
